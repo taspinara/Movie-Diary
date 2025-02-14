@@ -64,11 +64,18 @@ const fetchMovies = async () => {
         img.alt = "No image available";
       }
 
+      // Added Favorite button
+      const button = document.createElement("button");
+      button.textContent = "Add to Favorites";
+      button.className = "mb-8 bg-blue-500 hover:bg-blue-400 text-white px-3 py-1 rounded";
+      button.setAttribute("onclick", `addToFavorites(${movie.id})`);
+
       h2.classList.add("text-xl", "mb-1", "font-semibold");
-      genresContainer.classList.add("text-md", "mb-10");
+      genresContainer.classList.add("text-md", "mb-2");
       li.appendChild(img);
       li.appendChild(h2);
       li.appendChild(genresContainer);
+      li.appendChild(button);
       ul.appendChild(li);
     });
   } catch (error) {
@@ -77,3 +84,22 @@ const fetchMovies = async () => {
 };
 
 fetchMovies();
+
+
+// Function to add a movie to favorites (stored in localStorage)
+function addToFavorites(movieId) {
+  fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`)
+      .then((response) => response.json())
+      .then((movie) => {
+          let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+          // Avoid duplicates
+          if (!favorites.find((fav) => fav.id === movie.id)) {
+              favorites.push(movie);
+              localStorage.setItem("favorites", JSON.stringify(favorites));
+              alert(`${movie.title} has been added to your favorites!`);
+          } else {
+              alert(`${movie.title} is already in your favorites!`);
+          }
+      })
+      .catch((error) => console.error("Error adding to favorites: ", error));
+}
