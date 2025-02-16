@@ -13,6 +13,7 @@ const truncateText = (text, maxLength) => {
   }
   return text;
 };
+
 ul.classList.add(
   "grid",
   "lg:grid-cols-5",
@@ -166,7 +167,6 @@ searchButton.addEventListener("click", () => fetchSearch(searchInput.value));
 // Clear search results
 searchInput.addEventListener("click", () => (searchResults.textContent = ""));
 // END Search
-
 
 // Function to add a movie to favorites (stored in localStorage)
 function addToFavorites(movieId) {
