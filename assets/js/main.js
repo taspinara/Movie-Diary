@@ -12,21 +12,18 @@ const searchResults = document.getElementById("search-results");
 
 const DISPLAY_LIMIT = 20;
 
-
 const limitText = (text, maxLength) => {
-    return (text.length > maxLength) ? `${text.substring(0, maxLength)}...` : text;
-}
+  return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+};
 
 const truncateText = (text, maxLength) => {
-    if (text.length > maxLength) {
-      return text.substring(0, maxLength) + "...";
-    }
-    return text;
-  };
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength) + "...";
+  }
+  return text;
+};
 
 const fetchSearch = async (input) => {
-  console.log("input", input);
-
   try {
     const response = await fetch(
       `${searchUrl}&language=en-US&page=1&include_adult=false&query=${input}`
@@ -35,7 +32,6 @@ const fetchSearch = async (input) => {
       throw new Error("Failed to fetch search input");
     }
     const data = await response.json();
-    console.log(data);
 
     const results = data.results;
 
@@ -43,7 +39,6 @@ const fetchSearch = async (input) => {
 
     // clear input
     searchInput.value = "";
-
   } catch (e) {
     console.error("Error fetching results", e);
   }
@@ -62,18 +57,19 @@ const displaySearchResults = (list) => {
       "max-sm:grid-cols-1",
       "max-sm:place-items-center"
     );
-    list.forEach((movie) => {
-      console.log(`Title: ${movie.title}`);
+    const displayLimit = Math.min(list.length, DISPLAY_LIMIT);
+
+    for (let i = 0; i < displayLimit; ++i) {
 
       const li = document.createElement("li");
       const img = document.createElement("img");
       const h2 = document.createElement("h2");
       const p = document.createElement("p");
-      h2.textContent = limitText(movie.title, 15);
+      h2.textContent = limitText(list[i].title, 15);
 
-      if (movie.poster_path) {
-        img.src = `${imageBaseUrl}${movie.poster_path}`;
-        img.alt = movie.title;
+      if (list[i].poster_path) {
+        img.src = `${imageBaseUrl}${list[i].poster_path}`;
+        img.alt = list[i].title;
       } else {
         img.src = "https://placehold.co/600x900/png"; // Placeholder if no image is available
         img.alt = "No image available";
@@ -86,10 +82,11 @@ const displaySearchResults = (list) => {
       li.appendChild(p);
 
       searchResults.appendChild(li);
-    });
+    }
   }
 };
 
 searchButton.addEventListener("click", () => fetchSearch(searchInput.value));
+// Clear search results
 searchInput.addEventListener("click", () => (searchResults.textContent = ""));
 // END Search
