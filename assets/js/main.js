@@ -185,3 +185,4 @@ function addToFavorites(movieId) {
       })
       .catch((error) => console.error("Error adding to favorites: ", error));
 }
+
