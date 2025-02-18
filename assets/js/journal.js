@@ -113,7 +113,7 @@ function saveNoteForMovie(movieId) {
     favorites[movieIndex].note = noteInput.value;
     localStorage.setItem("favorites", JSON.stringify(favorites));
 
-    alert("✅ Shënimi u ruajt me sukses!");
+    alert("✅ Note saved successfully!");
     console.log("Updated favorites:", favorites);
   } else {
     console.error("Movie not found in favorites");
