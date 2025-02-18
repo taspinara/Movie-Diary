@@ -7,8 +7,7 @@
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    
+<body>    
     <!-- NAVBAR -->
     <nav class="bg-blue-500 mb-8 p-4 shadow">
         <div class="container mx-auto flex items-center justify-between">
@@ -67,6 +66,14 @@
         </div>
     </nav>
 
-    <script src="../js/journal.js"></script>
+     <!-- Display local data -->
+     <div class="container m-auto">
+        <ul id="local-results">
+          <!-- local results will be populated here -->
+        </ul>
+      </div>
+      <!-- END search local display -->
+
+    <script src="./../js/journal.js"></script>
 </body>
 </html>

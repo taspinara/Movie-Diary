@@ -95,6 +95,7 @@ const searchButton = document.getElementById("submit-btn");
 const searchResults = document.getElementById("search-results");
 
 const DISPLAY_LIMIT = 20;
+const OVERVIEW_LIMIT = 50;
 
 const limitText = (text, maxLength) => {
   return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
@@ -111,6 +112,8 @@ const fetchSearch = async (input) => {
     const data = await response.json();
 
     const results = data.results;
+    console.log("data", results);
+    
 
     displaySearchResults(results);
 
@@ -122,7 +125,8 @@ const fetchSearch = async (input) => {
 };
 
 const displaySearchResults = (list) => {
-  if (!list) {
+  if (list.length == 0) {
+    searchResults.innerHTML = `<p class="text-red-600 mx-auto text-md mb-2">No information to display</p>`
     console.log("No data");
   } else {
     searchResults.classList.add(
@@ -141,7 +145,13 @@ const displaySearchResults = (list) => {
       const li = document.createElement("li");
       const img = document.createElement("img");
       const h2 = document.createElement("h2");
+
       const p = document.createElement("p");
+      p.textContent = `${limitText(list[i].overview, OVERVIEW_LIMIT)}`;
+
+      const button = document.createElement("button");
+      button.textContent = "Add to Favorites";
+
       h2.textContent = limitText(list[i].title, DISPLAY_LIMIT);
 
       if (list[i].poster_path) {
@@ -150,20 +160,26 @@ const displaySearchResults = (list) => {
       } else {
         img.src = "https://placehold.co/600x900/png"; // Placeholder if no image is available
         img.alt = "No image available";
+        img.classList.add("w-64");
       }
 
-      h2.classList.add("text-xl", "mb-1", "font-semibold");
-      p.classList.add("text-md", "mb-10");
+      h2.classList.add("text-xl", "m-2", "font-semibold");
+
+      p.classList.add("text-md", "mb-2")
+      button.className = "mb-8 bg-blue-500 hover:bg-blue-400 text-white px-3 py-1 rounded";
+      button.setAttribute("onclick", `addToFavorites(${list[i].id})`);
+
       li.appendChild(img);
       li.appendChild(h2);
       li.appendChild(p);
+      li.appendChild(button)
 
       searchResults.appendChild(li);
     }
   }
 };
 
-searchButton.addEventListener("click", () => fetchSearch(searchInput.value));
+searchButton.addEventListener("click", () => fetchSearch(searchInput.value.trim()));
 // Clear search results
 searchInput.addEventListener("click", () => (searchResults.textContent = ""));
 // END Search
