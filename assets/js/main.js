@@ -201,3 +201,12 @@ function addToFavorites(movieId) {
       })
       .catch((error) => console.error("Error adding to favorites: ", error));
 }
+
+// Hamburger menu toggle 
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+
+
+mobileMenuButton.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+});
