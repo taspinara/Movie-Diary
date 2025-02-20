@@ -1,5 +1,6 @@
 const localResults = document.getElementById("local-results");
 const imageBaseUrl = "https://image.tmdb.org/t/p/w300";
+const apiKey = "0dd562c1903f3f6f6244f87faff5d4c7";
 
 const limitText = (text, maxLength) => {
   return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
@@ -79,6 +80,98 @@ const displayFavorites = () => {
 };
 
 displayFavorites();
+
+// Search bar  feature
+
+const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}`;
+
+const searchInput = document.getElementById("search-input");
+const searchButton = document.getElementById("submit-btn");
+const searchResults = document.getElementById("search-results");
+
+const fetchSearch = async (input) => {
+  try {
+    const response = await fetch(
+      `${searchUrl}&language=en-US&page=1&include_adult=false&query=${input}`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch search input");
+    }
+    const data = await response.json();
+
+    const results = data.results;
+    console.log("data", results);
+    
+
+    displaySearchResults(results);
+
+    // clear input
+    searchInput.value = "";
+  } catch (e) {
+    console.error("Error fetching results", e);
+  }
+};
+
+const displaySearchResults = (list) => {
+  if (list.length == 0) {
+    searchResults.innerHTML = `<p class="text-red-600 mx-auto text-md mb-2">No information to display</p>`
+    console.log("No data");
+  } else {
+    searchResults.classList.add(
+      "grid",
+      "lg:grid-cols-5",
+      "md:grid-cols-4",
+      "md:gap-2",
+      "sm:grid-cols-2",
+      "max-sm:grid-cols-1",
+      "max-sm:place-items-center"
+    );
+    const displayLimit = Math.min(list.length, DISPLAY_LIMIT);
+
+    for (let i = 0; i < displayLimit; ++i) {
+
+      const li = document.createElement("li");
+      const img = document.createElement("img");
+      const h2 = document.createElement("h2");
+
+      const p = document.createElement("p");
+      p.textContent = `${limitText(list[i].overview, OVERVIEW_LIMIT)}`;
+
+      const button = document.createElement("button");
+      button.textContent = "Add to Favorites";
+
+      h2.textContent = limitText(list[i].title, DISPLAY_LIMIT);
+
+      if (list[i].poster_path) {
+        img.src = `${imageBaseUrl}${list[i].poster_path}`;
+        img.alt = list[i].title;
+      } else {
+        img.src = "https://placehold.co/600x900/png"; // Placeholder if no image is available
+        img.alt = "No image available";
+        img.classList.add("w-64");
+      }
+
+      h2.classList.add("text-xl", "m-2", "font-semibold");
+
+      p.classList.add("text-md", "mb-2")
+      button.className = "mb-8 bg-blue-500 hover:bg-blue-400 text-white px-3 py-1 rounded";
+      button.setAttribute("onclick", `addToFavorites(${list[i].id})`);
+
+      li.appendChild(img);
+      li.appendChild(h2);
+      li.appendChild(p);
+      li.appendChild(button)
+
+      searchResults.appendChild(li);
+    }
+  }
+};
+
+searchButton.addEventListener("click", () => fetchSearch(searchInput.value.trim()));
+// Clear search results
+searchInput.addEventListener("click", () => (searchResults.textContent = ""));
+// END Search
+
 
 const displayNotes = () => {
   const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
