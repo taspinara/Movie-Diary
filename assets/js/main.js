@@ -64,6 +64,12 @@ const fetchMovies = async () => {
         img.src = "https://via.placeholder.com/150"; // Placeholder if no image is available
         img.alt = "No image available";
       }
+      img.classList.add(
+        "sm:h-[400px]",
+        "md:h-[300px]",
+        "lg:h-[350]",
+        "xl:h-[450px]"
+      );
 
       // Added Favorite button
       const button = document.createElement("button");
