@@ -63,6 +63,12 @@ const fetchMovies = async () => {
         img.src = "https://via.placeholder.com/150"; // Placeholder if no image is available
         img.alt = "No image available";
       }
+      img.classList.add(
+        "sm:h-[400px]",
+        "md:h-[300px]",
+        "lg:h-[350]",
+        "xl:h-[450px]"
+      );
 
       h2.classList.add("text-xl", "mb-1", "font-semibold");
       genresContainer.classList.add("text-md", "mb-10");
