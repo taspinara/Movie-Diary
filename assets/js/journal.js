@@ -48,12 +48,18 @@ const displayFavorites = () => {
 
       p.classList.add("text-md", "mb-2");
       const noteSection = document.createElement("div");
-      noteSection.classList.add("note-section", "mt-2");
+      noteSection.classList.add("note-section", "mt-2", "sm:mr-4");
 
       const textarea = document.createElement("textarea");
       textarea.id = `note-${elt.id}`;
       textarea.placeholder = "Write a note...";
-      textarea.classList.add("w-full", "p-2", "border", "rounded");
+      textarea.classList.add(
+        "w-full",
+        "p-2",
+        "border",
+        "rounded",
+        "max-sm:w-5/6"
+      );
       const button = document.createElement("button");
       button.textContent = "Save Note";
       button.classList.add(
@@ -63,7 +69,11 @@ const displayFavorites = () => {
         "px-4",
         "py-2",
         "rounded",
-        "hover:bg-blue-600"
+        "hover:bg-blue-600",
+        "max-sm:w-5/6",
+        "max-sm:mb-4",
+        "sm:mb-4",
+        "sm:w-full"
       );
       button.onclick = () => saveNoteForMovie(elt.id);
 
