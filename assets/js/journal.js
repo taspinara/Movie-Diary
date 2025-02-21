@@ -44,9 +44,9 @@ const displayFavorites = () => {
         img.classList.add("w-64");
       }
 
-      h2.classList.add("text-xl", "m-2", "font-semibold");
+      h2.classList.add("text-xl", "text-white", "m-2", "font-semibold");
 
-      p.classList.add("text-md", "mb-2");
+      p.classList.add("text-md", "text-white", "mb-2");
       const noteSection = document.createElement("div");
       noteSection.classList.add("note-section", "mt-2", "sm:mr-4");
 
@@ -161,9 +161,9 @@ const displaySearchResults = (list) => {
         img.classList.add("w-64");
       }
 
-      h2.classList.add("text-xl", "m-2", "font-semibold");
+      h2.classList.add("text-xl", "text-white", "m-2", "font-semibold");
 
-      p.classList.add("text-md", "mb-2")
+      p.classList.add("text-md", "text-white", "mb-2")
       button.className = "mb-8 bg-blue-500 hover:bg-blue-400 text-white px-3 py-1 rounded";
       button.setAttribute("onclick", `addToFavorites(${list[i].id})`);
 

@@ -77,8 +77,8 @@ const fetchMovies = async () => {
       button.className = "mb-8 bg-blue-500 hover:bg-blue-400 text-white px-3 py-1 rounded";
       button.setAttribute("onclick", `addToFavorites(${movie.id})`);
 
-      h2.classList.add("text-xl", "mb-1", "font-semibold");
-      genresContainer.classList.add("text-md", "mb-2");
+      h2.classList.add("text-xl", "text-white", "mb-1", "font-semibold");
+      genresContainer.classList.add("text-md", "text-white", "mb-2");
       li.appendChild(img);
       li.appendChild(h2);
       li.appendChild(genresContainer);
@@ -169,9 +169,9 @@ const displaySearchResults = (list) => {
         img.classList.add("w-64");
       }
 
-      h2.classList.add("text-xl", "m-2", "font-semibold");
+      h2.classList.add("text-xl", "text-white",  "m-2", "font-semibold");
 
-      p.classList.add("text-md", "mb-2")
+      p.classList.add("text-md", "text-white", "mb-2")
       button.className = "mb-8 bg-blue-500 hover:bg-blue-400 text-white px-3 py-1 rounded";
       button.setAttribute("onclick", `addToFavorites(${list[i].id})`);
 
